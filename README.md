@@ -7,7 +7,7 @@ Reversino is a Python tool for finding subdomains from IP ranges or CIDR subnets
 ## Installation
 
 ```bash
-
+pip install -r requirements.txt
 ```
 
 ## Usage:
