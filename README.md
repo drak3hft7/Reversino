@@ -10,7 +10,7 @@ Reversino is a Python tool for finding subdomains from IP ranges or CIDR subnets
 pip install -r requirements.txt
 ```
 
-## Usage:
+## Usage
 ```bash
 python3 Reversino.py -h
 ```
@@ -19,3 +19,15 @@ python3 Reversino.py -h
 - `--all` or `-a`  Use this option if the file contains both IP ranges and CIDR subnets.
 
 ![01](images/01.png 'Help')
+
+## Example with a file containing both IP ranges and CIDR subnets
+
+Contents of the file range_all.txt:
+```
+192.251.124.0/24
+192.251.125.0-192.251.125.254
+```
+
+```bash
+python3 Reversino.py -f range_all.txt -a
+```
