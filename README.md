@@ -24,10 +24,41 @@ python3 Reversino.py -h
 
 Contents of the file range_all.txt:
 ```
-192.251.124.0/24
-192.251.125.0-192.251.125.254
+173.0.84.0/28
+173.0.84.190-173.0.84.200
 ```
 
+Usage:
 ```bash
 python3 Reversino.py -f range_all.txt -a
 ```
+
+![03](images/03.png 'All')
+
+### Example with a file containing IP ranges (format: start-end)
+
+Contents of the file range_start-end.txt:
+```
+173.0.84.190-173.0.84.200
+```
+
+Usage:
+```bash
+python3 Reversino.py -f range_start-end.txt
+```
+
+![04](images/04.png 'All')
+
+### Example with a file containing CIDR (e.g., 195.49.41.0/24)
+
+Contents of the file range_cidr.txt:
+```
+173.0.84.0/28
+```
+
+Usage:
+```bash
+python3 Reversino.py -f range_cidr.txt
+```
+
+![05](images/05.png 'All')
