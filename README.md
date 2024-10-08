@@ -20,7 +20,7 @@ python3 Reversino.py -h
 
 ![01](images/01.png 'Help')
 
-## Example with a file containing both IP ranges and CIDR subnets
+### Example with a file containing both IP ranges and CIDR subnets
 
 Contents of the file range_all.txt:
 ```
