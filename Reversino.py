@@ -3,17 +3,34 @@ import os
 import argparse
 import pyfiglet
 import ipaddress
+import requests
 
 # ANSI escape codes for colors
 BLUE = "\033[94m"
 GREEN = "\033[92m"
 RESET = "\033[0m"
 
+WEBHOOK_URL = "https://discord.com/api/webhooks/your_webhook_url"  # Insert your webhook here
+
 def print_banner():
     """Prints a blue ASCII banner at the start of the script."""
     ascii_banner = pyfiglet.figlet_format("reversino")
     print(f"{BLUE}{ascii_banner}{RESET}")
     print(f"{BLUE}Author: drak3hft7{RESET}\n")  # Author line below the banner
+
+def send_to_discord(message):
+    """Invia un messaggio a un webhook di Discord, se configurato."""
+    if not WEBHOOK_URL or WEBHOOK_URL == "https://discord.com/api/webhooks/your_webhook_url":
+        return  # Return if the webhook URL is not configured
+    data = {
+        "content": message
+    }
+    try:
+        response = requests.post(WEBHOOK_URL, json=data)
+        if response.status_code != 204:
+            print(f"Failed to send message to Discord: {response.status_code}, {response.text}")
+    except Exception as e:
+        print(f"An error occurred while sending to Discord: {e}")
 
 def ip_range_to_list(start_ip, end_ip):
     """Converts an IP range to a list of IP addresses."""
@@ -98,7 +115,7 @@ def save_subdomains_to_file(subdomains, output_file):
             file.write(f"{subdomain}\n")
     print(f"\nSubdomains saved to {output_file}")
 
-def main(file_path, is_all=False):
+def main(file_path):
     print_banner()  # Display the banner at the start
 
     # Check if the specified file exists
@@ -145,29 +162,30 @@ def main(file_path, is_all=False):
         # Feedback on remaining ranges to process
         remaining_ranges = total_ranges - (index + 1)
         print(f"Processed range {index + 1}/{total_ranges}. Remaining: {remaining_ranges}")
-
+        
     # Save the found subdomains to a text file
     save_subdomains_to_file(subdomains, output_file)
 
     # Display the found subdomains
     if subdomains:
-        print(f"\n{GREEN}Found {len(subdomains)} subdomains.{RESET}")  # Feedback in green
-        print("Found subdomains:")
-        for subdomain in subdomains:
-            print(subdomain)
+        message = f"\n{GREEN}Found {len(subdomains)} subdomains.{RESET}\n"  # Feedback in green
+        message += "Found subdomains:\n" + "\n".join(subdomains)
+        print(message)
     else:
         print("\nNo subdomains found.")
 
     # Provide feedback on the total IP addresses analyzed
     print(f"\nTotal IP addresses analyzed: {total_ips_analyzed}")
 
+    # Send only the necessary messages to Discord
+    send_to_discord(f"Reversino: Total IP addresses analyzed: {total_ips_analyzed}")
+    send_to_discord(f"Reversino: Total subdomains found: {len(subdomains)}")
+    send_to_discord("Reversino: Completed its task. It's coffee time for Reversino.")  # Notify on completion
+
 if __name__ == "__main__":
     # Set up command-line argument parsing
     parser = argparse.ArgumentParser(description='Find subdomains from IP ranges or CIDR subnets.')
-    parser.add_argument('-f', '--file', required=True, help='Path to the file containing IP ranges (format: start-end) or CIDR (e.g., 195.49.41.0/24)')
-    parser.add_argument('-a', '--all', action='store_true', help='Use this option if the file contains both IP ranges and CIDR subnets.')
-
+    parser.add_argument('-f', '--file', required=True, help='Path to the file containing IP ranges (format: start_ip-end_ip or CIDR)')
     args = parser.parse_args()
-    main(args.file, is_all=args.all)
-
-
+    
+    main(args.file)  # Run the main function with the specified file path
