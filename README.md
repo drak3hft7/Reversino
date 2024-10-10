@@ -72,3 +72,7 @@ python3 Reversino.py -f range_cidr.txt
 By creating a webhook endpoint on your Discord server, you will generate a webhook URL that you can insert into the source code to receive notifications.
 
 ![07](images/07.png 'All')
+
+This is what you will see in your Discord channel:
+
+![08](images/08.png 'All')
