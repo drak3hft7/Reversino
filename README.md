@@ -4,7 +4,9 @@
 
 Reversino is a Python tool for finding subdomains from IP ranges or CIDR subnets. It uses the Reverse DNS Lookup method, which involves performing a reverse DNS lookup on each IP within the range. This technique attempts to resolve each IP address to an associated domain name.
 
-Last update: **08 Oct 2024**
+Last update: **10 Oct 2024**
+
+- 10 Oct 2024: Now Reversino supports integration with Discord via webhook to receive notifications in your channel.
 
 ## Installation
 
@@ -64,3 +66,9 @@ python3 Reversino.py -f range_cidr.txt
 ```
 
 ![05](images/05.png 'All')
+
+## Notifications in your Discord channel through a webhook.
+
+By creating a webhook endpoint on your Discord server, you will generate a webhook URL that you can insert into the source code to receive notifications.
+
+![06](images/06.png 'All')
